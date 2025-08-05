@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Error 403</title>
+
+  <link th:replace="~{fragments/header :: bootstrap-css}"/>
+  <link th:replace="~{fragments/header :: css}"/>
+  <link th:replace="~{fragments/header :: bootstrap-icons}"/>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: navbar}"/>
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+  <h1>Error 405 not allowed!</h1>
+</div>
+
+<div th:replace="~{fragments/footer :: footer-links}" class="mt-auto"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+<div th:replace="~{fragments/footer :: js}"></div>
+</body>
+</html>

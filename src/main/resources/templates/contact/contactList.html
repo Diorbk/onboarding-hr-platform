@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee contact list</title>
+
+  <link th:replace="~{fragments/header :: bootstrap-css}">
+  <link th:replace="~{fragments/header :: css}">
+  <link th:replace="~{fragments/header :: bootstrap-icons}">
+
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: navbar}"/>
+  <div class="container my-5">
+    <table  class="table table-bordered">
+      <thead>
+      <tr>
+
+        <th>Name</th>
+        <th>Role</th>
+        <th>Email</th>
+        <th>Phone number</th>
+
+      </thead>
+      <tbody>
+      <tr th:each="contact, iStat : ${contacts}">
+        <td th:text="${contact.name}"></td>
+        <td th:text="${contact.role}"></td>
+        <td th:text="${contact.email}"></td>
+        <td th:text="${contact.phone_number}"></td>
+
+        <td><a type="button" class="btn btn-primary" th:href="@{/contacts/{id} (id=${contact.id})}">View Contact</a></td>
+      </tbody>
+    </table>
+    <div>
+      <a type="button" class="btn btn-primary" href="/contacts/create"> Create Contact </a>
+    </div>
+  </div>
+
+<div th:replace="~{fragments/footer :: footer-links}"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+
+</body>
+</html>

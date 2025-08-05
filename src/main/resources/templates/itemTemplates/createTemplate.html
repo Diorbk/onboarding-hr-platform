@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Checklist </title>
+
+  <link th:replace="~{fragments/header :: bootstrap-css}">
+  <link th:replace="~{fragments/header :: css}">
+  <link th:replace="~{fragments/header :: bootstrap-icons}">
+
+</head>
+<body>
+
+  <div th:replace="~{fragments/header :: navbar}"/> </div>
+
+  <div class="container">
+
+    <form th:object="${template}" th:action="@{../../templates/create}" method="post">
+
+      <div class="row mt-3 mb-3">
+        <input type="hidden" th:field="*{templateId}">
+         <label for="templateName" class="form-label">Template Name:</label>
+        <input type="text" class="form-control" id="templateName" th:field="*{templateName}">
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <p class="hidden" value="0" id="tmpItemCounter"></p>
+          <a type="button" th:attr="onclick=|updateTemplateName('${template.getTemplateId}')|" id="btnAddItem" class="btn btn-primary float-end mt-3">+ Add item</a>
+        </div>
+      </div>
+
+      <div th:each="item : ${items}">
+        <div class="row border rounded p-2 mt-3 tmpItemCounter">
+
+          <div class="col-4">
+            <p><b>Title:</b> <p th:text="${item.getTitle()}"></p></p>
+          </div>
+          <div class="col-4">
+            <p><b>Description:</b> <p th:text="${item.getDescription()}"></p></p>
+          </div>
+          <div class="col-2 d-flex align-items-center">
+            <a type="button" class="btn btn-primary" th:href="@{/items/__${item.getId()}__/update}">Edit</a>
+          </div>
+          <div class="col-2 d-flex align-items-center">
+            <a type="button" class="btn btn-danger" th:href="@{/templates/__${template.templateId}__/item/__${item.getId()}__/delete}">Delete</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col">
+          <a type="button" class="btn btn-danger me-1" th:href="@{/templates/__${template.templateId}__/delete}">Delete Template</a>
+          <button type="submit" class="btn btn-primary" onclick="return checkTmpItemCount()">Submit</button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+<div th:replace="~{fragments/footer :: js}"></div>
+
+</body>
+</html>

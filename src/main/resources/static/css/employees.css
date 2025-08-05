@@ -1,0 +1,10 @@
+.headerHeight {
+    height: 50vh;
+}
+
+#rightImage {
+    background-size: cover;
+    background-position: center;
+
+    background-image: url("../images/employeesImg.jpg");
+}

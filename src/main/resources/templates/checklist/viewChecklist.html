@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Checklist </title>
+
+    <link th:replace="~{fragments/header :: bootstrap-css}">
+    <link th:replace="~{fragments/header :: css}">
+    <link th:replace="~{fragments/header :: bootstrap-icons}">
+
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: navbar}"/>
+
+<div class="container">
+
+    <!-- Title Card -->
+    <div class="row border border-2 rounded checkListTitle p-2 mt-3 mb-3">
+        <div class="col">
+            <h2 th:text="${employee.getName()}"></h2>
+        </div>
+        <div class="col d-flex justify-content-center align-items-center">
+            <p class="d-flex align-items-center"><b>Role:</b><span th:text="${employee.getRole()}"></span></p>
+        </div>
+        <div class="col d-flex justify-content-center align-items-center">
+            <p><b>Start date:</b><span th:text="${employee.getStartDate()}"></span></p>
+        </div>
+        <div class="col">
+            <a type="button" class="btn btn-warning float-end" th:href="@{../../employees/__${employee.getId()}__/update}">Edit</a>
+        </div>
+    </div>
+    <!-- End Title Card -->
+
+
+    <!-- Save Button -->
+    <div class="row mb-3">
+        <div class="col ">
+            <a type="button"  class="btn btn-primary float-end ms-1" th:href="@{/items/create/__${employee.getId()}__}">
+                Create Item
+            </a>
+
+            <button type="button" class="btn btn-primary float-end ms-1" data-bs-toggle="modal" data-bs-target="#addTemplateModal">
+                Add template
+            </button>
+
+            <div class="modal fade" id="addTemplateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addTemplateModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Template</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <span th:each="template : ${templates}">
+                                <a class="row rounded border p-3" id="apply-template" th:href="@{/templates/__${template.templateId}__/apply/__${employee.getId()}__}">
+                                    <p th:text="${template.templateName}"></p>
+                                </a>
+                            </span>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Understood</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <button type="submit" form="checklistForm" class="btn btn-secondary float-end" id="saveChanges"s  disabled>Save Changes</button>
+            <input class="d-none" value="0" id="unsavedCheckCounter"></input>
+        </div>
+    </div>
+    <!-- End Save Button -->
+
+    <!-- Checklist -->
+    <form th:action="@{/items/check}" th:object="${itemForm}" method="post" id="checklistForm">
+
+        <a class="row border border-2 p-2 rounded checkListTitle mb-3" data-bs-toggle="collapse" href="#collapseIncompleteItems" onclick="rotateOpenChevron()" role="button">
+            <div class="col">
+                <h2> Incomplete Items </h2>
+            </div>
+            <div class="col d-flex align-items-center flex-row-reverse">
+                <i id="chevron-open" class="bi bi-chevron-down"></i>
+            </div>
+        </a>
+
+        <div th:each="item, status : *{itemList}" class="collapse show" id="collapseIncompleteItems">
+            <span th:if="${item.isComplete == false}">
+                <input type="hidden" th:field="*{itemList[__${status.index}__].id}"/>
+                <input type="hidden" th:field="*{itemList[__${status.index}__].title}"/>
+                <input type="hidden" th:field="*{itemList[__${status.index}__].description}"/>
+                <input type="hidden" th:field="*{itemList[__${status.index}__].dueDate}"/>
+                <input type="hidden" th:field="*{itemList[__${status.index}__].ownerId}"/>
+                <input type="hidden" th:field="*{itemList[__${status.index}__].contactsId}"/>
+                <div class="row border rounded p-2 mb-3 " th:id="checklist-row- + ${item.getId()}">
+                    <div class="col">
+                        <input th:attr="onclick=|checkItem('${item.getId()}')|"  type="checkbox" th:field="*{itemList[__${status.index}__].isComplete}" class="btn-check itemCheck" th:id="checkbox- + ${item.getId()}" autocomplete="off">
+                        <label class="btn btn-outline-primary" th:id="checkbox-label- + ${item.getId()}" th:for="checkbox- + ${item.getId()}"><i class="bi bi-check2-square"></i></label><br>
+                    </div>
+                    <div class="col">
+                        <p th:text="${item.getTitle()}"></p>
+                    </div>
+                    <div class="col">
+                        <p><b>Due Date: </b><span th:text="${item.getDueDate()}"></span></p>
+                    </div>
+                    <div class="col">
+                        <a type="button" class="btn btn-primary ms-1 float-end" th:href="@{../../items/__${item.getId()}__}">
+                            View Details
+                        </a>
+                        <a type="button" class="btn btn-primary float-end" th:href="@{/email/__${item.getId()}__/poke}">
+                            Poke
+                        </a>
+                    </div>
+                </div>
+            </span>
+        </div>
+
+        <a class="row border border-2 rounded checkListTitle p-2 mb-3" data-bs-toggle="collapse" href="#collapseCompleteItems" onclick="rotateClosedChevron()" role="button">
+            <div class="col">
+                <h2> Complete Items </h2>
+            </div>
+            <div class="col d-flex align-items-center flex-row-reverse">
+                <i id="chevron-closed" class="bi bi-chevron-down"></i>
+            </div>
+        </a>
+
+        <div th:each="item, status : *{itemList}" class="collapse show" id="collapseCompleteItems">
+            <span th:if="${item.isComplete == true}">
+                <input type="hidden" th:field="*{itemList[__${status.index}__].id}"/>
+                <input type="hidden" th:field="*{itemList[__${status.index}__].title}"/>
+                <input type="hidden" th:field="*{itemList[__${status.index}__].description}"/>
+                <input type="hidden" th:field="*{itemList[__${status.index}__].dueDate}"/>
+                <input type="hidden" th:field="*{itemList[__${status.index}__].ownerId}"/>
+                <input type="hidden" th:field="*{itemList[__${status.index}__].contactsId}"/>
+                <div class="row border border-dark rounded p-2 mb-3 " th:id="checklist-row- + ${item.getId()}">
+                    <div class="col">
+                        <input th:attr="onclick=|checkItem('${item.getId()}')|"  type="checkbox" th:field="*{itemList[__${status.index}__].isComplete}" class="btn-check itemCheck" th:id="checkbox- + ${item.getId()}" autocomplete="off">
+                        <label class="btn btn-primary complete" th:id="checkbox-label- + ${item.getId()}" th:for="checkbox- + ${item.getId()}"><i class="bi bi-check2-square"></i></label><br>
+                    </div>
+                    <div class="col">
+                        <p th:text="${item.getTitle()}"></p>
+                    </div>
+                    <div class="col">
+                        <p><b>Due Date: </b><span th:text="${item.getDueDate()}"></span></p>
+                    </div>
+                    <div class="col">
+                        <a type="button" class="btn btn-primary float-end" th:href="@{../../items/__${item.getId()}__}">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </span>
+        </div>
+
+    </form>
+    <!-- End Checklist -->
+
+</div>
+
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+<div th:replace="~{fragments/footer :: js}"></div>
+
+</body>
+</html>

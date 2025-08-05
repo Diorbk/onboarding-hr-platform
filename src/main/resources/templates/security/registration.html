@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+
+  <link th:replace="~{fragments/header :: css}">
+</head>
+
+<body class="registration-bod text-center">
+
+<form th:object="${user}" th:action="@{/register}" method="post" class="form-signin">
+
+  <h1 class="h3 mb-3 font-weight-normal">Register Temp</h1>
+
+  <label class="sr-only" for="username">Username:</label>
+  <input class="form-control" type="text" id="username" name="username" placeholder="Username" required>
+
+  <label for="password" class="sr-only">Password</label>
+  <input class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" type="password" id="password" name="password" placeholder="Password" required>
+
+  <label class="sr-only" for="email">Email:</label>
+  <input class="form-control" type="email" id="email" name="email" placeholder="Email" required>
+
+<!--  <label class="sr-only" for="employeeId">Employee ID:</label>-->
+<!--  <input class="form-control" type="text" id="employeeId" name="employeeId" placeholder="Employee ID" required>-->
+
+  <select th:field="*{roleId}" id="role_id" name="role_id">
+    <option value="2" selected>USER</option>
+  </select>
+
+  <br>
+
+  <input type="hidden" th:field="*{enabled}" th:value="true">
+
+  <button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Submit</button>
+
+</form>
+</body>
+</html>
+

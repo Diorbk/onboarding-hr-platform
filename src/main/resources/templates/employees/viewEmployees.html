@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> View Employees </title>
+
+  <link th:replace="~{fragments/header :: bootstrap-css}">
+  <link th:replace="~{fragments/header :: css}">
+  <link th:replace="~{fragments/header :: bootstrap-icons}">
+
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: navbar}"/>
+
+<div class="container mt-3">
+
+  <a class="row border border-2 p-2 rounded checkListTitle mb-3" data-bs-toggle="collapse" href="#collapseOpenChecklist" onclick="rotateOpenChevron()" role="button">
+    <div class="col">
+      <h2> Open Checklists </h2>
+    </div>
+    <div class="col d-flex align-items-center flex-row-reverse">
+      <i id="chevron-open" class="bi bi-chevron-down"></i>
+    </div>
+  </a>
+
+  <span class="collapse show" id="collapseOpenChecklist">
+      <div th:if="${openEmployees.empty}">
+        <p>No open checklists</p>
+      </div>
+      <div th:each="employee : ${openEmployees}">
+        <div class="mb-3">
+          <div class="row border rounded p-2  ">
+            <div class="col">
+              <p th:text="${employee.getName()}"></p>
+            </div>
+            <div class="col">
+              <p th:text="${employee.getRole()}"></p>
+            </div>
+            <div class="col">
+              <p><b>Start date: </b><span th:text="${employee.getStartDate()}"></span></p>
+            </div>
+            <div class="col d-flex flex-row-reverse">
+              <a type="button" th:href="@{/employees/__${employee.getId()}__/checklist}" class="btn btn-primary">View Checklist</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </span>
+
+  <a class="row border border-2 rounded checkListTitle p-2 mb-3" data-bs-toggle="collapse" href="#collapseClosedChecklist" onclick="rotateClosedChevron()" role="button">
+    <div class="col">
+      <h2> Closed Checklists </h2>
+    </div>
+    <div class="col d-flex align-items-center flex-row-reverse">
+      <i id="chevron-closed" class="bi bi-chevron-down"></i>
+    </div>
+  </a>
+
+  <span class="collapse show" id="collapseClosedChecklist">
+      <div th:if="${completeEmployees.empty}">
+        <p>No closed checklists</p>
+      </div>
+      <div th:each="employee : ${completeEmployees}">
+        <div class="mb-3">
+          <div class="row border rounded p-2  ">
+            <div class="col">
+              <p th:text="${employee.getName()}"></p>
+            </div>
+            <div class="col">
+              <p th:text="${employee.getRole()}"></p>
+            </div>
+            <div class="col">
+              <p><b>Start date: </b><span th:text="${employee.getStartDate()}"></span></p>
+            </div>
+            <div class="col d-flex flex-row-reverse">
+              <a type="button" th:href="@{/employees/__${employee.getId()}__/checklist}" class="btn btn-secondary">View Checklist</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </span>
+
+  <div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+  <div th:replace="~{fragments/footer :: js}"></div>
+
+</body>
+</html>

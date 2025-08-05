@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Item Details</title>
+
+  <link th:replace="~{fragments/header :: bootstrap-css}"/>
+  <link th:replace="~{fragments/header :: css}"/>
+  <link th:replace="~{fragments/header :: bootstrap-icons}"/>
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+
+<body>
+<div th:replace="~{fragments/header :: navbar}"/>
+
+<main>
+  <div class="container mt-5">
+    <h2 class="text-center">Item Details</h2>
+
+      <p type="hidden" th:field="*{id}"/>
+
+      <div class="form-group">
+        <label for="name">Title:</label>
+        <h3 id="name" type="text" th:text="${item.title}" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label for="role">Description:</label>
+        <h3 id="role" type="text" th:text="${item.description}" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label for="dueDate">Due Date:</label>
+        <h3 id="dueDate" name="dueDate" type="date" th:text="${item.dueDate}" class="form-control" />
+      </div>
+
+    <div class="form-group">
+      <label id="contacts" for="contacts">Contact: </label>
+      <h3 th:text="${contactService.getContactByID(item.contactsId).name}" class="form-control"></h3>
+    </div>
+
+    <div class="form-group mt-3">
+      <a th:href="@{/items/__${item.getId()}__/update}" class="btn btn-primary">Edit Item</a>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<div th:replace="~{fragments/footer :: footer-links}" class="mt-auto"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+<div th:replace="~{fragments/footer :: js}"></div>
+
+</body>
+</html>

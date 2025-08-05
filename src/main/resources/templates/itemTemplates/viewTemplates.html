@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> View Templates </title>
+
+  <link th:replace="~{fragments/header :: bootstrap-css}">
+  <link th:replace="~{fragments/header :: css}">
+  <link th:replace="~{fragments/header :: bootstrap-icons}">
+
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: navbar}"/> </div>
+
+<div class="container">
+
+
+  <div class="row mt-3">
+    <div class="col d-flex justify-content-center">
+      <h2>Templates</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <a type="button" class="btn btn-primary float-end mt-3" th:href="@{/templates/create}">Create template</a>
+    </div>
+  </div>
+
+
+
+  <div th:each="template: ${templates}">
+    <div class="row rounded border border-2 mt-3 p-3">
+      <div class="col">
+        <p><b>Title:</b> <p th:text="${template.templateName}"></p></p>
+      </div>
+      <div class="col d-flex flex-row-reverse align-items-center">
+        <a type="button" class="btn btn-primary" th:href="@{/templates/__${template.templateId}__/edit}">Edit</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+<div th:replace="~{fragments/footer :: js}"></div>
+
+</body>
+</html>

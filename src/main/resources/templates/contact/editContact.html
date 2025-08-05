@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add employee contact form</title>
+
+  <link th:replace="~{fragments/header :: bootstrap-css}">
+  <link th:replace="~{fragments/header :: css}">
+  <link th:replace="~{fragments/header :: bootstrap-icons}">
+
+</head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"/>
+
+<div class="container">
+
+  <h1>Employee contact details</h1>
+
+  <form th:action="@{/contacts/update}" th:method="post" th:object="${contact}">
+
+    <input th:name="${_csrf.parameterName}"
+           th:type="hidden"
+           th:value="${_csrf.token}"/>
+
+    <input th:field="*{id}" type="hidden"/>
+
+
+    <div class="mb-3">
+      <label class="form-label" th:for="*{name}">Name:</label>
+      <input class="form-control" placeholder="Enter name" th:field="*{name}" type="text" required/>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01" >Options</label>
+      </div>
+
+      <select class="custom-select" id="inputGroupSelect01" th:field="*{role}" required>
+        <option th:value="'Software Engineer'">Software Engineer</option>
+        <option th:value="'Product Design'">Product Design</option>
+        <option th:value="'Data Analyst'">Data Analyst</option>
+        <option th:value="'HR'">HR</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" th:for="*{email}">Email:</label>
+      <input class="form-control" placeholder="Enter email" th:field="*{email}" type="email" required/>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" th:for="*{phone_number}">Phone number:</label>
+      <input class="form-control" placeholder="Enter contact number" th:field="*{phone_number}" type="number" minlength="10" maxlength="11" required/>
+    </div>
+
+    <div>
+      <div class="mb-3">
+        <button class="btn btn-primary">Submit</button>
+      </div>
+
+
+      <div class="mb-3">
+        <a class="btn btn-primary" href="/contacts">Cancel</a>
+      </div>
+    </div>
+
+  </form>
+
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer-links}" class="mt-auto"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+<div th:replace="~{fragments/footer :: js}"></div>
+
+</body>
+</html>

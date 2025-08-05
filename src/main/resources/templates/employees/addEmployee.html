@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Employee</title>
+
+  <link th:replace="~{fragments/header :: bootstrap-css}"/>
+  <link th:replace="~{fragments/header :: css}"/>
+  <link th:replace="~{fragments/header :: bootstrap-icons}"/>
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+
+<body>
+<div th:replace="~{fragments/header :: navbar}"/>
+
+<main>
+  <div class="container mt-5 p-5">
+    <h2 class="text-center">Add Employee</h2>
+
+    <form th:action="@{/employees/added}" method="post" th:object="${employee}" class="was-validated">
+      <input type="hidden" th:field="*{id}"/>
+
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input id="name" type="text" th:field="*{name}" class="form-control" required/>
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Role:</label>
+        <select type="" id="role" th:field="*{role}" class="form-control" required/>
+        <option>Manager</option>
+        <option>Developer</option>
+        <option>Designer</option>
+        <option>Analyst</option>
+        <option>Engineer</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input id="email" name="email" type="email" th:field="*{email}" class="form-control" required/>
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Invalid Email</div>
+      </div>
+
+      <div class="form-group">
+        <label id="startDate" for="startDate">Start Date:</label>
+        <input type="date" max="9999-12-31" th:field="*{startDate}" class="form-control" required/>
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Add Employee</button>
+    </form>
+  </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<div th:replace="~{fragments/footer :: footer-links}" class="mt-auto"></div>
+<div th:replace="~{fragments/footer :: bootstrap-js}"></div>
+<div th:replace="~{fragments/footer :: js}"></div>
+
+</body>
+</html>

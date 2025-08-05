@@ -1,0 +1,65 @@
+@import url("login.css");
+@import url("navbar.css");
+@import url("employees.css");
+
+
+:root {
+    --main-colour: #2A2731;
+    --bg-2-colour: #F4F4F4;
+    --btn-3-colour: #05ED99;
+    --btn-2-colour: #333139;
+    --btn-1-colour: #D75C3A;
+}
+
+@font-face {
+    font-family: "rionaSansReg";
+    src: url(../fonts/rionaSansReg.ttf);
+}
+
+@font-face {
+    font-family: "rionaSansMed";
+    src: url(../fonts/rionaSansMed.ttf);
+}
+.btn { font-family: rionaSansMed; }
+
+.bg-main { background-color: var(--main-colour); }
+.bg-bg2 {background-color: var(--bg-2-colour);}
+
+.btn-btnMain { background-color: var(--btn-1-colour) !important; }
+.btn-btn2 { background-color: var(--btn-2-colour) !important; }
+.btn-btn3 { background-color: var(--btn-3-colour) !important; }
+.btn:hover, .btn-btnMain:hover, btn-btn2:hover, btn-btn3:hover { filter: brightness(80%) ; }
+
+.h-full { height: 100vh; }
+
+body
+{
+    font-family: rionaSansReg;
+}
+
+#userList{
+    font-size: 1rem;
+}
+
+/* VIEW EMPLOYEES */
+.checkListTitle {
+    text-decoration: none;
+    color: inherit;
+}
+.checklistTitle:hover {
+    color: #61686b !important;
+}
+.checklist-chevron {
+    font-size: 2rem;
+}
+.rotate-chevron {
+    transform: rotate(180deg);
+}
+
+.registration-bod{
+    background: white;
+}
+
+#apply-template:hover {
+    background-color: rgb(0,0,0,0.1) !important;
+}
